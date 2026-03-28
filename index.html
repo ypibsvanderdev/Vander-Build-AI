@@ -7,10 +7,9 @@
     <meta name="description" content="AI Code Builder & Chatbot. 100% animated and premium.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
 </head>
 <body class="dark-theme">
     <div id="cursor-glow"></div>
@@ -18,101 +17,160 @@
 
     <!-- 1. LANDING PAGE (Original AI Bootcamp Style) -->
     <section id="landing-page">
-        <header class="app-header glass">
-            <div class="nav-split">
+        <header class="landing-header">
+            <div class="nav-container">
                 <div class="logo">AI<span>BOOTCAMP</span></div>
-                <div class="app-actions">
-                    <button class="btn-outline" onclick="scrollToSection('join')">JOIN TERMINAL</button>
-                    <button class="btn-glow" style="padding: 0.6rem 2rem;" onclick="enterBuilder()">AI BUILDER</button>
+                <div class="nav-right">
+                    <button class="btn-outline" onclick="scrollToBuilder()">EXPLORE</button>
+                    <button class="btn-glow" onclick="enterBuilder()">AI BUILDER</button>
                 </div>
             </div>
         </header>
 
         <section id="hero" class="hero">
-            <div class="auth-box glass">
-                <h1 class="logo-large">VANDER<span>BUILDER</span></h1>
-                <p class="hero-subtext">The next frontier of engineering isn't written, it's computed.</p>
-                <div class="hero-actions">
-                    <button class="btn-glow" onclick="enterBuilder()">ACCESS AI ARCHITECT</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Keep some modules for the 'tuuf' feel -->
-        <section id="modules" style="padding: 10rem 0;">
-            <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
-                <h2 class="glitch-text">CORE MODULES</h2>
-                <div class="module-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem;">
-                    <div class="module-card" style="background: rgba(255,255,255,0.03); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
-                        <h3>NEURAL NODES</h3>
-                        <p>Construct multi-layer perceptrons.</p>
-                    </div>
-                    <div class="module-card" style="background: rgba(255,255,255,0.03); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
-                        <h3>LLM TUNING</h3>
-                        <p>Deep-learning foundations.</p>
-                    </div>
-                    <div class="module-card" style="background: rgba(255,255,255,0.03); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
-                        <h3>EDGE DEPLOY</h3>
-                        <p>High-tier performance extraction.</p>
-                    </div>
-                </div>
+            <div class="hero-center-box">
+                <h1 class="hero-title">VANDER<span>BUILDER</span></h1>
+                <p class="hero-subtitle">The next frontier of engineering isn't written, it's computed. Build apps with terminal speed.</p>
+                <button class="btn-mega" onclick="enterBuilder()">ACCESS TERMINAL</button>
             </div>
         </section>
     </section>
 
-    <!-- 2. BASE44 AI BUILDER INTERFACE (Hidden by default) -->
+    <!-- 2. LOVABLE-STYLE BUILDER INTERFACE (The AI Part) -->
     <main id="builder-interface" style="display: none;">
-        <header class="app-header glass">
-            <div class="nav-split">
-                <div class="logo">VANDER<span>ARCHITECT</span></div>
-                <div class="app-actions">
-                    <div class="user-pill">
-                        <span>Vander Master</span>
-                        <div class="status-indicator online"></div>
-                    </div>
-                    <button class="btn-outline" onclick="exitBuilder()">LOGOUT</button>
+        <!-- TOP NAVIGATION BAR -->
+        <header class="lovable-header">
+            <div class="header-left">
+                <div class="vander-logo-small">V</div>
+                <div class="breadcrumb">VanderHub Access / <span>Main Workspace</span></div>
+            </div>
+            <div class="header-center">
+                <div class="tab-group">
+                    <button class="tab-btn active" onclick="switchMainView('preview')">Preview</button>
+                    <button class="tab-btn" onclick="switchMainView('dashboard')">Dashboard</button>
+                    <button class="tab-btn" onclick="switchMainView('code')">Code</button>
                 </div>
+            </div>
+            <div class="header-right">
+                <button class="btn-upgrade">Upgrade</button>
+                <button class="btn-publish">Publish</button>
+                <div class="user-avatar" onclick="exitBuilder()"></div>
             </div>
         </header>
 
-        <div class="builder-interface">
-            <aside class="builder-sidebar">
-                <div class="sidebar-header">
-                    <h3>ARCHITECT CHAT</h3>
-                    <div class="ai-select">
-                        <select id="model-select" style="background:transparent; border:1px solid rgba(255,255,255,0.1); color:#00f2ff; padding:4px 8px; border-radius:4px; font-size:0.7rem;">
-                            <option value="gpt-4o-mini">GPT-4o Mini (Free)</option>
-                            <option value="vander-ultra">Vander Ultra v2</option>
-                            <option value="claude-3-haiku">Claude 3 Haiku</option>
-                        </select>
+        <div class="app-viewport">
+            <!-- LEFT CHAT SIDEBAR -->
+            <aside class="lovable-sidebar">
+                <div class="sidebar-top">
+                    <div class="sidebar-header">
+                        <div class="ai-status"><span class="pulse"></span> AI ARCHITECT</div>
+                    </div>
+                    <div id="lovable-messages">
+                        <div class="chat-bubble ai">
+                            <p>VANDER ARCHITECT ONLINE. Ready to build. What are we architecting today?</p>
+                        </div>
                     </div>
                 </div>
-                <div id="chat-history">
-                    <div class="msg ai">Welcome, blud. What are we building in the terminal today?</div>
-                </div>
-                <div class="chat-input-box">
-                    <textarea id="user-prompt" placeholder="Type a prompt to generate code..."></textarea>
-                    <button onclick="sendChatMessage()" class="btn-glow" style="margin-top:0.5rem;">SEND PROMPT</button>
+                <div class="sidebar-bottom">
+                    <div class="suggestions-row">
+                        <span class="tag">Add Pricing</span>
+                        <span class="tag">Dark Mode</span>
+                        <span class="tag">Auth Grid</span>
+                    </div>
+                    <div class="chat-input-wrapper">
+                        <textarea id="ai-input" placeholder="What would you like to change?"></textarea>
+                        <button class="btn-send" onclick="sendBuilderMessage()"></button>
+                    </div>
                 </div>
             </aside>
 
-            <div class="builder-main">
-                <div class="tab-bar">
-                    <div class="tab-item active" onclick="switchBuilderView('code')">TERMINAL CODE</div>
-                    <div class="tab-item" onclick="switchBuilderView('preview')">LIVE PREVIEW</div>
+            <!-- MAIN CONTENT AREA (DASHBOARD) -->
+            <section class="main-content-view">
+                <!-- VIEW: DASHBOARD (Pricing/Access Cards) -->
+                <div id="view-dashboard" class="content-panel active">
+                    <div class="dashboard-scroll">
+                        <header class="db-header">
+                            <h2>VanderHub Key Store</h2>
+                            <p>Manage your access and keys from a single industrial terminal.</p>
+                        </header>
+                        
+                        <div class="key-card glass">
+                            <div class="card-status"><span class="badge active">Active Key</span> <span class="badge tier">LIFETIME</span></div>
+                            <div class="key-display">
+                                <code>VH-SYP8FG-9WYBU5-OVKYLB-NGTC2D</code>
+                                <button class="btn-copy">Copy</button>
+                            </div>
+                            <p class="card-note">Lifetime access — never expires.</p>
+                        </div>
+
+                        <div class="pricing-section">
+                            <h3>Manage Your Access</h3>
+                            <p>Choose a plan to unlock full access to VanderHub.</p>
+                            <div class="price-grid">
+                                <div class="price-card glass">
+                                    <div class="card-top">
+                                        <div class="icon-bolt"></div>
+                                        <h4>Monthly</h4>
+                                    </div>
+                                    <div class="price-val">$5<span>/ month</span></div>
+                                    <ul class="features">
+                                        <li>Full VanderHub access</li>
+                                        <li>New key each month</li>
+                                        <li>Cancel anytime</li>
+                                    </ul>
+                                    <button class="btn-select">Select Plan</button>
+                                </div>
+                                <div class="price-card glass popular">
+                                    <div class="popular-badge">POPULAR</div>
+                                    <div class="card-top">
+                                        <div class="icon-crown"></div>
+                                        <h4>Lifetime</h4>
+                                    </div>
+                                    <div class="price-val">$50<span>one-time</span></div>
+                                    <ul class="features">
+                                        <li>Full VanderHub access</li>
+                                        <li>Never expires</li>
+                                        <li>One-time payment</li>
+                                    </ul>
+                                    <button class="btn-select prim">Select Lifetime</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="editor-view" class="editor-viewport">
-                    <pre><code id="code-output">// AI Architect: Initialize session...
-// Waiting for prompt commands.
-function build() {
-    return "Ready.";
-}</code></pre>
+
+                <!-- VIEW: PREVIEW (Live View) -->
+                <div id="view-preview" class="content-panel">
+                    <div class="preview-stage">
+                        <div class="stage-header">
+                            <div class="stage-controls">
+                                <span class="control"></span><span class="control"></span><span class="control"></span>
+                            </div>
+                            <div class="stage-url">localhost:3000</div>
+                        </div>
+                        <div class="stage-content">
+                            <!-- Live content would go here -->
+                            <div class="spinner"></div>
+                            <p>Computing Interface...</p>
+                        </div>
+                    </div>
                 </div>
-                <div id="preview-view" class="editor-viewport" style="display: none; background: #000; display:flex; align-items:center; justify-content:center;">
-                    <div class="spinner"></div>
-                    <p style="margin-left: 1rem; color: #9ca3af;">Computing Preview...</p>
+
+                <!-- VIEW: CODE (Editor) -->
+                <div id="view-code" class="content-panel">
+                    <div class="code-editor-wrap">
+                        <div class="editor-header">App.tsx</div>
+                        <pre id="lovable-editor"><code>// Vander Builder Output
+export const App = () => {
+    return (
+        <VanderContainer>
+            <Dashboard header="Key Store" />
+        </VanderContainer>
+    );
+};</code></pre>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </main>
 

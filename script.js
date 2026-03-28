@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Cursor Glow Effect
+    // 1. Cursor & Particles
     const cursorGlow = document.getElementById('cursor-glow');
     document.addEventListener('mousemove', (e) => {
         gsap.to(cursorGlow, {
@@ -10,111 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Transition Logic: Landing to Builder
-    window.enterBuilder = () => {
-        gsap.to('#landing-page', {
-            y: -100,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.inOut",
-            onComplete: () => {
-                document.getElementById('landing-page').style.display = 'none';
-                const builder = document.getElementById('builder-interface');
-                builder.style.display = 'block';
-                builder.style.opacity = '0';
-                gsap.to(builder, {
-                    opacity: 1,
-                    duration: 1,
-                    onComplete: () => {
-                        addChatMessage('ai', 'VANDER ARCHITECT: Systems synchronized. What are we building today?');
-                    }
-                });
-            }
-        });
-    };
-
-    window.exitBuilder = () => { window.location.reload(); };
-
-    // 3. Chat Logic
-    window.sendChatMessage = () => {
-        const input = document.getElementById('user-prompt');
-        const text = input.value.trim();
-        if (!text) return;
-
-        addChatMessage('user', text);
-        input.value = '';
-
-        // Simulate AI Construction (Base44 style)
-        setTimeout(() => {
-            const model = document.getElementById('model-select').value;
-            let response = "";
-            let codeSnippet = "";
-
-            if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
-                response = `[${model}]: Building structural components for your technical landing page. I'll focus on high-end glassmorphism and performance optimizations.`;
-                codeSnippet = `// Architect Code Output [${model}]\n// Initializing Landing Page Header Component\n\nfunction renderHeader() {\n    const nav = document.createElement('nav');\n    nav.className = 'glass sticky top-0';\n    return nav;\n}\n\n// Deploying core hero logic...`;
-            } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
-                response = `[${model}]: Architecting an AI-powered dashboard. Initializing data-grid kernels and state persistence.`;
-                codeSnippet = `// Architect Code Output [${model}]\n// Generating Application State Management Layer\n\nconst AppState = {\n    activeUser: "VanderMaster",\n    sessionToken: "VDR_0xCADE3",\n    status: "OPTIMIZED"\n};\n\nfunction syncState() {\n    console.log("State: Synchronized.");\n}`;
-            } else {
-                response = `[${model}]: Prompt analyzed. Initializing specialized code generation for the provided technical context. Check the terminal for output.`;
-                codeSnippet = `// Code Output [${model}]\n// Generating optimized logic based on user input: ${text}\n\nfunction initializeTerminal() {\n    const status = "BASE44-ONLINE";\n    return status;\n}`;
-            }
-
-            addChatMessage('ai', response);
-            updateCodeOutput(codeSnippet);
-        }, 1200);
-    };
-
-    function addChatMessage(type, text) {
-        const history = document.getElementById('chat-history');
-        const msg = document.createElement('div');
-        msg.className = `msg ${type}`;
-        msg.innerText = text;
-        history.appendChild(msg);
-        history.scrollTop = history.scrollHeight;
-
-        gsap.from(msg, {
-            y: 10,
-            opacity: 0,
-            duration: 0.5,
-            ease: "power2.out"
-        });
-    }
-
-    function updateCodeOutput(code) {
-        const codeOut = document.getElementById('code-output');
-        codeOut.innerText = code;
-        gsap.from(codeOut, {
-            opacity: 0,
-            duration: 0.5
-        });
-    }
-
-    // 4. Builder Tab Logic
-    window.switchBuilderView = (view) => {
-        const tabs = document.querySelectorAll('.tab-item');
-        tabs.forEach(t => t.classList.remove('active'));
-        
-        if (view === 'code') {
-            tabs[0].classList.add('active');
-            document.getElementById('editor-view').style.display = 'block';
-            document.getElementById('preview-view').style.display = 'none';
-        } else {
-            tabs[1].classList.add('active');
-            document.getElementById('editor-view').style.display = 'none';
-            document.getElementById('preview-view').style.display = 'flex';
-            setTimeout(() => {
-                const preview = document.getElementById('preview-view');
-                preview.innerHTML = '<h2 style="color:#00f2ff; font-family:Orbitron;">BUILD STATUS: SUCCESS</h2>';
-            }, 1500);
-        }
-    };
-
-    // 5. Background Particles
     const particleContainer = document.getElementById('particles-js');
     if (particleContainer) {
-        for (let i = 0; i < 70; i++) {
+        for (let i = 0; i < 50; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
             const size = Math.random() * 2 + 1;
@@ -123,13 +21,114 @@ document.addEventListener('DOMContentLoaded', () => {
             p.style.top = `${Math.random() * 100}%`;
             particleContainer.appendChild(p);
             gsap.to(p, {
-                x: `+=${Math.random() * 120 - 60}`,
-                y: `+=${Math.random() * 120 - 60}`,
+                x: `+=${Math.random() * 100 - 50}`,
+                y: `+=${Math.random() * 100 - 50}`,
                 duration: 10 + Math.random() * 10,
                 repeat: -1,
                 yoyo: true,
                 ease: "linear"
             });
         }
+    }
+
+    // 2. Main Navigation Transition
+    window.enterBuilder = () => {
+        gsap.to('#landing-page', {
+            opacity: 0,
+            y: -50,
+            duration: 0.8,
+            ease: "power3.inOut",
+            onComplete: () => {
+                document.getElementById('landing-page').style.display = 'none';
+                const builder = document.getElementById('builder-interface');
+                builder.style.display = 'block';
+                builder.style.opacity = '0';
+                gsap.to(builder, {
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
+            }
+        });
+    };
+
+    window.exitBuilder = () => { window.location.reload(); };
+
+    // 3. Tab Management (Preview / Dashboard / Code)
+    window.switchMainView = (viewId) => {
+        // Update Tabs
+        const btns = document.querySelectorAll('.tab-btn');
+        btns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.innerText.toLowerCase() === viewId.toLowerCase()) {
+                btn.classList.add('active');
+            }
+        });
+
+        // Update Content Panels
+        const panels = document.querySelectorAll('.content-panel');
+        panels.forEach(panel => {
+            panel.classList.remove('active');
+            if (panel.id === `view-${viewId}`) {
+                panel.classList.add('active');
+                gsap.from(panel, { opacity: 0, y: 10, duration: 0.4 });
+            }
+        });
+
+        if (viewId === 'preview') simulatePreview();
+    };
+
+    function simulatePreview() {
+        const stage = document.querySelector('.stage-content');
+        stage.innerHTML = '<div class="spinner"></div><p style="color:#6b7280; font-size:0.8rem; margin-top:1rem;">Rendering Viewport...</p>';
+        setTimeout(() => {
+            stage.innerHTML = `
+                <div style="text-align:center; padding: 2rem;">
+                    <h1 style="color:#3b82f6; font-family:Orbitron; font-size: 2rem; margin-bottom:1rem;">VANDER HUB</h1>
+                    <p style="color:#9ca3af; font-size:1.1rem;">Build successfully synchronized. Terminal online.</p>
+                </div>
+            `;
+        }, 1500);
+    }
+
+    // 4. Chat Management
+    window.sendBuilderMessage = () => {
+        const input = document.getElementById('ai-input');
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage('user', text);
+        input.value = '';
+
+        // Simulate AI Construction Response
+        setTimeout(() => {
+            addMessage('ai', `I'm analyzing the ${text} request. I'll architect the structural components for that in the main workspace.`);
+            // Simulate switching to Dashboard if it was about pricing or access
+            if (text.toLowerCase().includes('price') || text.toLowerCase().includes('key') || text.toLowerCase().includes('plan')) {
+                switchMainView('dashboard');
+            }
+        }, 1000);
+    };
+
+    function addMessage(type, text) {
+        const container = document.getElementById('lovable-messages');
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble ${type}`;
+        bubble.innerHTML = `<p>${text}</p>`;
+        container.appendChild(bubble);
+        container.scrollTop = container.scrollHeight;
+
+        gsap.from(bubble, { opacity: 0, scale: 0.9, y: 10, duration: 0.4, ease: "back.out(1.7)" });
+    }
+
+    // Utility for copying key
+    const copyBtn = document.querySelector('.btn-copy');
+    if (copyBtn) {
+        copyBtn.onclick = () => {
+            const code = document.querySelector('.key-display code').innerText;
+            navigator.clipboard.writeText(code);
+            copyBtn.innerText = 'Copied!';
+            setTimeout(() => { copyBtn.innerText = 'Copy'; }, 2000);
+        };
     }
 });
