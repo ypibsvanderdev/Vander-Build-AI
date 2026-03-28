@@ -130,12 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error("Simulated key detected. Reverting to architecture simulation.");
             }
 
-            // REAL GOOGLE GEMINI API CALL
+            // REAL GOOGLE GEMINI API CALL (Elite Prompting)
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: `You are a professional AI web architect. The user wants to build: ${text}. Provide a short technical response followed by a clean code snippet in backticks.` }] }]
+                    contents: [{ parts: [{ text: `You are an elite Industrial Software Architect. The user wants to build: ${text}. Provide a senior-level technical architectural overview followed by a production-ready code snippet (HTML/CSS/JS or React) in a single code block.` }] }]
                 })
             });
 
@@ -157,17 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 let codeText = "";
 
                 if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
-                    responseText = `I'll start building a clinical light-mode landing page architecture for you. I'm focusing on structural integrity and premium aesthetics.`;
-                    codeText = `// Landing Page Structure\nconst Layout = { theme: "clinical-white", blocks: 16 };`;
+                    responseText = `Initializing high-performance landing page architecture. utilizing adaptive grid kernels and clinical UI modules.`;
+                    codeText = `// Clinical Landing Page [Industrial Grade]\nexport const App = () => {\n    const [nodes, setNodes] = useState(initKernel());\n    return (\n        <UIPackage theme="vander-light">\n            <ClinicalHero dynamic />\n            <Grid nodes={nodes} />\n        </UIPackage>\n    );\n};`;
                 } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
-                    responseText = `Starting the application state management build. I'm synchronizing your project's primary nuclei right now.`;
-                    codeText = `// App State Manager\nconst State = { active: true, view: "main" };`;
-                } else if (text.toLowerCase().startsWith("hello") || text.toLowerCase().startsWith("hi")) {
-                    responseText = `Hello! How can I help you build today?`;
-                    codeText = `// Architecture Ready\nfunction main() { return "Online"; }`;
+                    responseText = `Architecting a functional dashboard nucleus. Implementing real-time data-binding and state persistence layers.`;
+                    codeText = `// Dashboard Kernel [Advanced Architecture]\nclass DashboardRegistry {\n    constructor() {\n        this.state = new Map();\n        this.middleware = [];\n    }\n    use(plugin) {\n        this.middleware.push(plugin);\n    }\n    dispatch(event) {\n        this.state.set(Date.now(), event);\n    }\n}`;
                 } else {
-                    responseText = `I've analyzed your request. I'm architecting the specialized logic now.`;
-                    codeText = `// Custom Logic: ${text}\nfunction init() { return "Ready"; }`;
+                    responseText = `Industrial project analysis complete. Generating clinical code logic for the specified architectural context.`;
+                    codeText = `// Clinical Middleware Engine\nconst Engine = {\n    init: async () => {\n        await registry.sync();\n        return new Controller({ mode: 'synchronized' });\n    },\n    authorize: (key) => key.valid ? 'AUTHORIZED' : 'DENIED'\n};`;
                 }
 
                 updateMessage(loadingMsgId, responseText);
