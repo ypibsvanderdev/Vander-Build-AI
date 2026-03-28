@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. State Management
+    // 2. State Management (Hardcoded Simulated Keys for Presentation Access)
     let activeModel = 'Gemini 1.5 Flash';
     const API_CONFIG = {
-        Gemini: '',
-        Groq: '',
-        Mistral: ''
+        Gemini: 'AI-z-vander-flash-9wy-NGTC2D',
+        Groq: 'gsk-vdr-llama3-70b-v2-0xCADE3',
+        Mistral: 'mst-vander-7b-clinical-N7-B44'
     };
 
     // 3. Main Navigation Transition
@@ -124,15 +124,19 @@ document.addEventListener('DOMContentLoaded', () => {
             let response = "";
             let code = "";
 
+            // Simulate 'Key Authorization' check for presentation
+            const hasKey = API_CONFIG[modelLabel.split(' ')[0]];
+            const authStatus = hasKey ? `<span style="color:#10b981; font-size:0.7rem;">[AUTH VERIFIED]</span>` : `<span style="color:#ef4444; font-size:0.7rem;">[AUTH FAILED]</span>`;
+
             if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
-                response = `<strong>[Architect Output | ${modelLabel}]</strong>: Constructing high-precision structural kernels for your landing page. Focus on clinical light-mode aesthetics.`;
-                code = `// Clinical Structural Kernel [${modelLabel}]\n// Initializing High-Tier Interface Matrix\n\nconst Layout = {\n    scheme: "clinical-white",\n    logic: "high-performance",\n    nodes: 12\n};\n\nfunction render() {\n    return \`Vander-Sync: ${modelLabel}\`;\n}`;
+                response = `<strong>[Architect Output | ${modelLabel}]</strong> ${authStatus}: Constructing high-precision structural kernels for your landing page. Focus on clinical light-mode aesthetics.`;
+                code = `// Clinical Structural Kernel [${modelLabel}]\n// Authorization: SYNCED\n\nconst Layout = {\n    scheme: "clinical-white",\n    logic: "high-performance",\n    nodes: 12\n};\n\nfunction render() {\n    return \`Vander-Sync: ${modelLabel}\`;\n}`;
             } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
-                response = `<strong>[Architect Output | ${modelLabel}]</strong>: Building application state management layer for your dashboard. Synchronizing project nuclei.`;
-                code = `// Dashboard Nucleus [${modelLabel}]\n// Initializing Application Primary State\n\nconst STATE = {\n    active: true,\n    model: "${modelLabel}",\n    access: "LIFETIME"\n};\n\nfunction syncDashboard() {\n    console.log("Nucleus synchronized.");\n}`;
+                response = `<strong>[Architect Output | ${modelLabel}]</strong> ${authStatus}: Building application state management layer for your dashboard. Synchronizing project nuclei.`;
+                code = `// Dashboard Nucleus [${modelLabel}]\n// Authorization: SYNCED\n\nconst STATE = {\n    active: true,\n    model: "${modelLabel}",\n    access: "LIFETIME"\n};\n\nfunction syncDashboard() {\n    console.log("Nucleus synchronized.");\n}`;
             } else {
-                response = `<strong>[Architect Output | ${modelLabel}]</strong>: Specialized analysis complete. Architecting specialized logic for: ${text}`;
-                code = `// Specialized Logic [${modelLabel}]\n// Generating optimized code based on: ${text}\n\nfunction initTerminal() {\n    return "Status: Clinical-Online";\n}`;
+                response = `<strong>[Architect Output | ${modelLabel}]</strong> ${authStatus}: Specialized analysis complete. Architecting specialized logic for: ${text}`;
+                code = `// Specialized Logic [${modelLabel}]\n// Authorization: SYNCED\n// Generating optimized code based on: ${text}\n\nfunction initTerminal() {\n    return "Status: Clinical-Online";\n}`;
             }
 
             addMessage('ai', response);
