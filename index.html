@@ -66,10 +66,24 @@
                         <h3>AI ARCHITECT</h3>
                         <div class="model-select">
                             <select id="ai-model-selector" onchange="updateModel()">
-                                <option value="gpt-4o-mini">GPT-4o Mini (Free)</option>
-                                <option value="claude-3-haiku">Claude 3 Haiku (Free)</option>
-                                <option value="gemini-1.5-flash">Gemini Flash (Free)</option>
-                                <option value="vander-ultra">Vander-Ultra v2</option>
+                                <optgroup label="Free Tier">
+                                    <option value="gpt-4o-mini">GPT-4o Mini (Free)</option>
+                                    <option value="claude-3-haiku">Claude 3 Haiku (Free)</option>
+                                    <option value="gemini-1.5-flash">Gemini 1.5 Flash (Free)</option>
+                                    <option value="llama-3-70b">Llama 3 70B (Free)</option>
+                                    <option value="mistral-nemo">Mistral NeMo (Free)</option>
+                                </optgroup>
+                                <optgroup label="Premium Tier">
+                                    <option value="gpt-4o">GPT-4o (Premium)</option>
+                                    <option value="claude-3-5-sonnet">Claude 3.5 Sonnet (Premium)</option>
+                                    <option value="claude-3-opus">Claude 3 Opus (Premium)</option>
+                                    <option value="vander-ultra-v2">Vander Ultra v2 (Specialized)</option>
+                                </optgroup>
+                                <optgroup label="Experimental">
+                                    <option value="deepseek-coder">DeepSeek Coder v2</option>
+                                    <option value="code-llama">Code Llama 34B</option>
+                                    <option value="stable-code">Stable Code 3B</option>
+                                </optgroup>
                             </select>
                         </div>
                     </div>
