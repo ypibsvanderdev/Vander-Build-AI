@@ -102,21 +102,35 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage('user', text);
         input.value = '';
 
-        // Simulate AI Response
+        // Simulate AI Response (Specialized for Web Building)
         setTimeout(() => {
-            const responses = [
-                "Excellent choice. I'll architect the structural components for that.",
-                "Initializing the neural layer for your request...",
-                "The code is being computed. Check the editor for the output.",
-                "Vander Builder is currently optimizing the deployment strategy."
-            ];
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-            addMessage('system', randomResponse);
-            
-            // Simulate code appearing in editor
-            updateCode(`// Generating based on: ${text}\nconst AI_LAYER = "OPTIMIZED";\nfunction deploy() {\n    return "SYSTEM_SUCCESS";\n}`);
-        }, 1000);
+            const model = document.getElementById('ai-model-selector').value;
+            let response = "";
+            let code = "";
+
+            if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
+                response = `Building a modern ${model} architecture for your landing page. I'll focus on responsive layouts and premium light-mode aesthetics.`;
+                code = `// Web Architect [${model}]\n// Generating Responsive Landing Page Structure\n\nconst Layout = {\n    header: "StickHeader [Subtle Glass]",\n    hero: "Dynamic Hero [Centered]",\n    features: "Adaptive Grid [3 Col]",\n    footer: "Minimal Clean"\n};\n\nfunction render() {\n    return "UI Components: Ready";\n}`;
+            } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
+                response = `Architecting a functional ${model} dashboard app. Initializing state management and data grids.`;
+                code = `// App Builder [${model}]\n// Initializing React-style state for dashboard components\n\nconst APP_STATE = {\n    user: "Authenticated",\n    view: "Overview",\n    stats: [98.2, 1045, 12],\n    theme: "Light-Elegance"\n};\n\nfunction createDashboard() {\n    console.log("Building grid visualizer...");\n    return "State: Synchronized";\n}`;
+            } else {
+                response = `[Vander Architect]: Analyzing Request for ${model}. I'll build out the core logic based on your technical prompt.`;
+                code = `// AI Core [${model}]\n// Generating specialized logic based on user technical prompt: ${text}\n\nfunction initCore() {\n    const logic = "Optimized";\n    return \`Status: \${logic}\`;\n}`;
+            }
+
+            addMessage('system', response);
+            updateCode(code);
+        }, 1200);
     };
+
+    window.updateModel = () => {
+        const model = document.getElementById('ai-model-selector').value;
+        addMessage('system', `AI Architect switched to ${model}. READY TO BUILD.`);
+    };
+
+    // Note: Do NOT hardcode actual private keys here since this is pushed to GitHub.
+    // The UI handles key entry via the API MANAGEMENT modal, saving them safely to memory.
 
     function addMessage(type, text) {
         const container = document.getElementById('chat-messages');

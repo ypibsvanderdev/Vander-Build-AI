@@ -213,19 +213,40 @@ input:focus {
     border-bottom: 1px solid var(--glass-border);
 }
 
-#model-badge {
-    background: #eef2ff;
-    color: var(--accent-indigo);
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 0.7rem;
+.header-split {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
-#chat-messages {
-    flex: 1;
-    padding: 1.5rem;
-    overflow-y: auto;
+.chat-header h3 {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-transform: uppercase;
+}
+
+.model-select select {
+    background: #fff;
+    border: 1px solid var(--glass-border);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+}
+
+.model-select select:hover {
+    border-color: var(--accent-blue);
+}
+
+.chat-header p {
+    font-size: 0.7rem;
+    color: var(--text-dim);
 }
 
 .message {
