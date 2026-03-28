@@ -172,26 +172,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. Background Particles
     const particleContainer = document.getElementById('particles-js');
     if (particleContainer) {
-        for (let i = 0; i < 70; i++) {
+        for (let i = 0; i < 60; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
-            p.style.background = '#3b82f6';
-            p.style.boxShadow = '0 0 10px rgba(59, 130, 246, 0.4)';
-            const size = Math.random() * 2.5 + 1;
+            const size = Math.random() * 2 + 1;
             p.style.width = p.style.height = `${size}px`;
             p.style.left = `${Math.random() * 100}%`;
             p.style.top = `${Math.random() * 100}%`;
             particleContainer.appendChild(p);
             gsap.to(p, {
-                opacity: Math.random() * 0.5 + 0.2,
-                duration: 2 + Math.random() * 3,
-                repeat: -1,
-                yoyo: true
-            });
-            gsap.to(p, {
-                x: `+=${Math.random() * 200 - 100}`,
-                y: `+=${Math.random() * 200 - 100}`,
-                duration: 15 + Math.random() * 15,
+                x: `+=${Math.random() * 100 - 50}`,
+                y: `+=${Math.random() * 100 - 50}`,
+                duration: 10 + Math.random() * 10,
                 repeat: -1,
                 yoyo: true,
                 ease: "linear"
