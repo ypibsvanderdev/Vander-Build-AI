@@ -33,7 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Main Navigation Transition
+    // 2. State Management
+    let activeModel = 'Gemini 1.5 Flash';
+    const API_CONFIG = {
+        Gemini: '',
+        Groq: '',
+        Mistral: ''
+    };
+
+    // 3. Main Navigation Transition
     window.enterBuilder = () => {
         gsap.to('#landing-page', {
             opacity: 0,
@@ -102,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     }
 
-    // 4. Chat Management (Base 44 Style)
+    // 4. Chat Management (Base 44 Style + Real-time Builder Simulation)
     window.sendBuilderMessage = () => {
         const input = document.getElementById('ai-input');
         const text = input.value.trim();
@@ -112,12 +120,31 @@ document.addEventListener('DOMContentLoaded', () => {
         input.value = '';
 
         setTimeout(() => {
-            addMessage('ai', `Analysis complete. Architecting the <strong>${text}</strong> module with high-precision components.`);
-            if (text.toLowerCase().includes('price') || text.toLowerCase().includes('plan')) {
-                switchMainView('dashboard');
+            let modelLabel = activeModel;
+            let response = "";
+            let code = "";
+
+            if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
+                response = `<strong>[Architect Output | ${modelLabel}]</strong>: Constructing high-precision structural kernels for your landing page. Focus on clinical light-mode aesthetics.`;
+                code = `// Clinical Structural Kernel [${modelLabel}]\n// Initializing High-Tier Interface Matrix\n\nconst Layout = {\n    scheme: "clinical-white",\n    logic: "high-performance",\n    nodes: 12\n};\n\nfunction render() {\n    return \`Vander-Sync: ${modelLabel}\`;\n}`;
+            } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
+                response = `<strong>[Architect Output | ${modelLabel}]</strong>: Building application state management layer for your dashboard. Synchronizing project nuclei.`;
+                code = `// Dashboard Nucleus [${modelLabel}]\n// Initializing Application Primary State\n\nconst STATE = {\n    active: true,\n    model: "${modelLabel}",\n    access: "LIFETIME"\n};\n\nfunction syncDashboard() {\n    console.log("Nucleus synchronized.");\n}`;
+            } else {
+                response = `<strong>[Architect Output | ${modelLabel}]</strong>: Specialized analysis complete. Architecting specialized logic for: ${text}`;
+                code = `// Specialized Logic [${modelLabel}]\n// Generating optimized code based on: ${text}\n\nfunction initTerminal() {\n    return "Status: Clinical-Online";\n}`;
             }
-        }, 900);
+
+            addMessage('ai', response);
+            updateEditorCode(code);
+        }, 800);
     };
+
+    function updateEditorCode(code) {
+        const editor = document.getElementById('lovable-editor');
+        editor.innerHTML = `<code>${code}</code>`;
+        gsap.from(editor, { opacity: 0, duration: 0.4 });
+    }
 
     function addMessage(type, text) {
         const container = document.getElementById('lovable-messages');
