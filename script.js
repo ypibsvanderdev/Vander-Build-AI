@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     }
 
-    // 4. Chat Management (Base 44 Style + Real-time Builder Simulation)
-    window.sendBuilderMessage = () => {
+    // 4. Chat Management (REAL AI INTEGRATION)
+    window.sendBuilderMessage = async () => {
         const input = document.getElementById('ai-input');
         const text = input.value.trim();
         if (!text) return;
@@ -119,46 +119,77 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage('user', text);
         input.value = '';
 
-        setTimeout(() => {
-            let modelLabel = activeModel;
-            let response = "";
-            let code = "";
-
-            // Simulate 'Key Authorization' check for presentation
-            const hasKey = API_CONFIG[modelLabel.split(' ')[0]];
-            const authStatus = hasKey ? `<span style="color:#10b981; font-size:0.7rem;">[AUTH VERIFIED]</span>` : `<span style="color:#ef4444; font-size:0.7rem;">[AUTH FAILED]</span>`;
-
-            if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
-                response = `<strong>[Architect Output | ${modelLabel}]</strong> ${authStatus}: Constructing high-precision structural kernels for your landing page. Focus on clinical light-mode aesthetics.`;
-                code = `// Clinical Structural Kernel [${modelLabel}]\n// Authorization: SYNCED\n\nconst Layout = {\n    scheme: "clinical-white",\n    logic: "high-performance",\n    nodes: 12\n};\n\nfunction render() {\n    return \`Vander-Sync: ${modelLabel}\`;\n}`;
-            } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
-                response = `<strong>[Architect Output | ${modelLabel}]</strong> ${authStatus}: Building application state management layer for your dashboard. Synchronizing project nuclei.`;
-                code = `// Dashboard Nucleus [${modelLabel}]\n// Authorization: SYNCED\n\nconst STATE = {\n    active: true,\n    model: "${modelLabel}",\n    access: "LIFETIME"\n};\n\nfunction syncDashboard() {\n    console.log("Nucleus synchronized.");\n}`;
-            } else {
-                response = `<strong>[Architect Output | ${modelLabel}]</strong> ${authStatus}: Specialized analysis complete. Architecting specialized logic for: ${text}`;
-                code = `// Specialized Logic [${modelLabel}]\n// Authorization: SYNCED\n// Generating optimized code based on: ${text}\n\nfunction initTerminal() {\n    return "Status: Clinical-Online";\n}`;
+        // Retrieve the active key for Gemini (easiest to integrate free)
+        const geminiKey = API_CONFIG.Gemini;
+        
+        // Show 'Processing' state
+        const loadingMsgId = addMessage('ai', `<strong>[Architect Output | Processing...]</strong> Analyzing structural kernels...`);
+        
+        try {
+            if (!geminiKey || geminiKey.includes('vander')) {
+                throw new Error("Simulated key detected. Reverting to architecture simulation.");
             }
 
-            addMessage('ai', response);
-            updateEditorCode(code);
-        }, 800);
-    };
+            // REAL GOOGLE GEMINI API CALL
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: `You are a professional AI web architect. The user wants to build: ${text}. Provide a short technical response followed by a clean code snippet in backticks.` }] }]
+                })
+            });
 
-    function updateEditorCode(code) {
-        const editor = document.getElementById('lovable-editor');
-        editor.innerHTML = `<code>${code}</code>`;
-        gsap.from(editor, { opacity: 0, duration: 0.4 });
-    }
+            const data = await response.json();
+            const aiResponse = data.candidates[0].content.parts[0].text;
+
+            // Separate the text from the code block if it exists
+            const codeMatch = aiResponse.match(/```(?:[a-z]+)?\n([\s\S]*?)```/);
+            const cleanText = aiResponse.replace(/```[\s\S]*?```/g, '').trim();
+            const cleanCode = codeMatch ? codeMatch[1].trim() : `// Generated Architectural Logic\nconst output = "Ready";`;
+
+            updateMessage(loadingMsgId, `<strong>[Architect Output | Gemini 1.5 Flash]</strong> <span style="color:#10b981;">[LIVE API]</span>: ${cleanText}`);
+            updateEditorCode(cleanCode);
+
+        } catch (error) {
+            // FALLBACK TO PREMIUM SIMULATION IF NO REAL KEY OR ERROR
+            setTimeout(() => {
+                let modelLabel = activeModel;
+                let responseText = "";
+                let codeText = "";
+
+                if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
+                    responseText = `<strong>[Architect Output | ${modelLabel}]</strong> <span style="color:#f59e0b;">[Vander-Sim]</span>: Constructing high-precision structural kernels for your landing page. Clinical light-mode focus.`;
+                    codeText = `// Clinical Structural Kernel [${modelLabel}]\nconst Layout = { scheme: "clinical-white", nodes: 12 };`;
+                } else {
+                    responseText = `<strong>[Architect Output | ${modelLabel}]</strong> <span style="color:#f59e0b;">[Vander-Sim]</span>: Specialized analysis complete. Generating logic for: ${text}`;
+                    codeText = `// Specialized Logic [${modelLabel}]\nfunction init() { return "Online"; }`;
+                }
+
+                updateMessage(loadingMsgId, responseText);
+                updateEditorCode(codeText);
+            }, 800);
+        }
+    };
 
     function addMessage(type, text) {
         const container = document.getElementById('lovable-messages');
         const bubble = document.createElement('div');
+        const id = 'msg-' + Date.now();
+        bubble.id = id;
         bubble.className = `chat-bubble ${type}`;
         bubble.innerHTML = `<p>${text}</p>`;
         container.appendChild(bubble);
         container.scrollTop = container.scrollHeight;
 
         gsap.from(bubble, { opacity: 0, y: 15, duration: 0.5, ease: "power2.out" });
+        return id;
+    }
+
+    function updateMessage(id, text) {
+        const msg = document.getElementById(id);
+        if (msg) {
+            msg.querySelector('p').innerHTML = text;
+        }
     }
 
     // 5. Scroll Utility
