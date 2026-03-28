@@ -7,7 +7,7 @@
     <meta name="description" content="AI Code Builder & Chatbot. 100% animated and premium.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
@@ -16,131 +16,105 @@
     <div id="cursor-glow"></div>
     <div id="particles-js"></div>
 
-    <!-- 1. LANDING / AUTH GATE -->
-    <section id="auth-gate" class="hero">
-        <div class="container auth-wrapper">
-            <div class="hero-content">
-                <div class="logo-large">VANDER<span>BUILDER</span></div>
-                <h1 class="glitch-text" data-text="EVOLVE">EVOLVE</h1>
-                <p class="hero-subtext">The next-generation AI code builder combined with high-tier intelligence. Styled for pioneers.</p>
-                
-                <div class="auth-box glass">
-                    <div id="auth-forms">
-                        <div class="google-login" onclick="simulateGoogleLogin()">
-                            <img src="https://www.google.com/favicon.ico" alt="Google">
-                            Sign in with Google
-                        </div>
-                        <div class="divider">OR</div>
-                        <form id="gate-form" onsubmit="handleAuth(event)">
-                            <input type="email" placeholder="Email Address" required>
-                            <input type="password" placeholder="Terminal Password" required>
-                            <button type="submit" class="btn-glow" style="width: 100%;">ACCESS TERMINAL</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2. MAIN BUILDER INTERFACE (Hidden until Auth) -->
-    <main id="app-interface" style="display: none;">
+    <!-- 1. LANDING PAGE (Original AI Bootcamp Style) -->
+    <section id="landing-page">
         <header class="app-header glass">
-            <div class="container nav-split">
-                <div class="logo">VANDER<span>BUILDER</span></div>
+            <div class="nav-split">
+                <div class="logo">AI<span>BOOTCAMP</span></div>
                 <div class="app-actions">
-                    <button class="btn-outline" onclick="openApiKeyModal()">API KEYS</button>
-                    <div class="user-pill">
-                        <span id="user-display-name">Vander User</span>
-                        <div class="status-indicator online"></div>
-                    </div>
-                    <button class="btn-outline" onclick="logout()" style="padding: 0.5rem 1rem;">Logout</button>
+                    <button class="btn-outline" onclick="scrollToSection('join')">JOIN TERMINAL</button>
+                    <button class="btn-glow" style="padding: 0.6rem 2rem;" onclick="enterBuilder()">AI BUILDER</button>
                 </div>
             </div>
         </header>
 
-        <section class="builder-container">
-            <!-- Sidebar / Chat -->
-            <aside class="chat-sidebar glass">
-                <div class="chat-header">
-                    <div class="header-split">
-                        <h3>AI ARCHITECT</h3>
-                        <div class="model-select">
-                            <select id="ai-model-selector" onchange="updateModel()">
-                                <option value="gpt-4o-mini">GPT-4o Mini (Free)</option>
-                                <option value="claude-3-haiku">Claude 3 Haiku (Free)</option>
-                                <option value="gemini-1.5-flash">Gemini Flash (Free)</option>
-                                <option value="vander-ultra">Vander-Ultra v2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <p>Building specialized web & app architectures.</p>
+        <section id="hero" class="hero">
+            <div class="auth-box glass">
+                <h1 class="logo-large">VANDER<span>BUILDER</span></h1>
+                <p class="hero-subtext">The next frontier of engineering isn't written, it's computed.</p>
+                <div class="hero-actions">
+                    <button class="btn-glow" onclick="enterBuilder()">ACCESS AI ARCHITECT</button>
                 </div>
-                <div id="chat-messages">
-                    <div class="message system">
-                        <p>Welcome to the Vander Builder. I'm ready to build with you. What are we architecting today?</p>
-                    </div>
-                </div>
-                <div class="chat-input-wrapper">
-                    <textarea id="chat-input" placeholder="Type a prompt to build..."></textarea>
-                    <button onclick="sendMessage()" class="btn-primary">SEND</button>
-                </div>
-            </aside>
+            </div>
+        </section>
 
-            <!-- Main Editor / Preview (Base44 Style) -->
-            <div class="editor-view">
-                <div class="tab-header glass">
-                    <div class="tab active" onclick="switchView('editor')">CODE</div>
-                    <div class="tab" onclick="switchView('preview')">PREVIEW</div>
-                </div>
-                
-                <div id="view-editor" class="view-content glass active">
-                    <div class="code-container">
-                        <div class="line-numbers">
-                            <!-- JS will populate -->
-                        </div>
-                        <pre id="code-display"><code>// Let's build something great.
-function initVanderBuilder() {
-    console.log("Systems Online.");
-}
-                        </code></pre>
+        <!-- Keep some modules for the 'tuuf' feel -->
+        <section id="modules" style="padding: 10rem 0;">
+            <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
+                <h2 class="glitch-text">CORE MODULES</h2>
+                <div class="module-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem;">
+                    <div class="module-card" style="background: rgba(255,255,255,0.03); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                        <h3>NEURAL NODES</h3>
+                        <p>Construct multi-layer perceptrons.</p>
                     </div>
-                </div>
-
-                <div id="view-preview" class="view-content glass">
-                    <div class="preview-frame">
-                        <div class="preview-placeholder">
-                            <div class="spinner"></div>
-                            <p>Architecting Preview...</p>
-                        </div>
+                    <div class="module-card" style="background: rgba(255,255,255,0.03); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                        <h3>LLM TUNING</h3>
+                        <p>Deep-learning foundations.</p>
+                    </div>
+                    <div class="module-card" style="background: rgba(255,255,255,0.03); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                        <h3>EDGE DEPLOY</h3>
+                        <p>High-tier performance extraction.</p>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
+    </section>
 
-    <!-- 3. API KEY MODAL -->
-    <div id="api-modal" class="modal">
-        <div class="modal-content glass">
-            <span class="close-modal" onclick="closeApiKeyModal()">&times;</span>
-            <h2>API MANAGEMENT</h2>
-            <p>Paste your keys below to unlock model capabilities.</p>
-            <div class="key-inputs">
-                <div class="key-field">
-                    <label>OpenAI Key</label>
-                    <input type="password" id="openai-key" placeholder="sk-...">
-                </div>
-                <div class="key-field">
-                    <label>Anthropic Key</label>
-                    <input type="password" id="anthropic-key" placeholder="sk-ant-...">
-                </div>
-                <div class="key-field">
-                    <label>Gemini Key</label>
-                    <input type="password" id="gemini-key" placeholder="AI-...">
+    <!-- 2. BASE44 AI BUILDER INTERFACE (Hidden by default) -->
+    <main id="builder-interface" style="display: none;">
+        <header class="app-header glass">
+            <div class="nav-split">
+                <div class="logo">VANDER<span>ARCHITECT</span></div>
+                <div class="app-actions">
+                    <div class="user-pill">
+                        <span>Vander Master</span>
+                        <div class="status-indicator online"></div>
+                    </div>
+                    <button class="btn-outline" onclick="exitBuilder()">LOGOUT</button>
                 </div>
             </div>
-            <button class="btn-glow" style="width: 100%; margin-top: 1rem;" onclick="saveKeys()">SAVE CONFIG</button>
+        </header>
+
+        <div class="builder-interface">
+            <aside class="builder-sidebar">
+                <div class="sidebar-header">
+                    <h3>ARCHITECT CHAT</h3>
+                    <div class="ai-select">
+                        <select id="model-select" style="background:transparent; border:1px solid rgba(255,255,255,0.1); color:#00f2ff; padding:4px 8px; border-radius:4px; font-size:0.7rem;">
+                            <option value="gpt-4o-mini">GPT-4o Mini (Free)</option>
+                            <option value="vander-ultra">Vander Ultra v2</option>
+                            <option value="claude-3-haiku">Claude 3 Haiku</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="chat-history">
+                    <div class="msg ai">Welcome, blud. What are we building in the terminal today?</div>
+                </div>
+                <div class="chat-input-box">
+                    <textarea id="user-prompt" placeholder="Type a prompt to generate code..."></textarea>
+                    <button onclick="sendChatMessage()" class="btn-glow" style="margin-top:0.5rem;">SEND PROMPT</button>
+                </div>
+            </aside>
+
+            <div class="builder-main">
+                <div class="tab-bar">
+                    <div class="tab-item active" onclick="switchBuilderView('code')">TERMINAL CODE</div>
+                    <div class="tab-item" onclick="switchBuilderView('preview')">LIVE PREVIEW</div>
+                </div>
+                <div id="editor-view" class="editor-viewport">
+                    <pre><code id="code-output">// AI Architect: Initialize session...
+// Waiting for prompt commands.
+function build() {
+    return "Ready.";
+}</code></pre>
+                </div>
+                <div id="preview-view" class="editor-viewport" style="display: none; background: #000; display:flex; align-items:center; justify-content:center;">
+                    <div class="spinner"></div>
+                    <p style="margin-left: 1rem; color: #9ca3af;">Computing Preview...</p>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
 
     <script src="script.js" defer></script>
 </body>

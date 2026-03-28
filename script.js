@@ -10,169 +10,111 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Auth Logic
-    window.handleAuth = (e) => {
-        e.preventDefault();
-        const email = e.target.querySelector('input[type="email"]').value;
-        const name = email.split('@')[0];
-        loginSuccess(name);
-    };
-
-    window.simulateGoogleLogin = () => {
-        const authBox = document.querySelector('.auth-box');
-        authBox.style.opacity = '0.5';
-        authBox.style.pointerEvents = 'none';
-        
-        setTimeout(() => {
-            loginSuccess("Google AI User");
-        }, 1200);
-    };
-
-    function loginSuccess(name) {
-        document.getElementById('user-display-name').innerText = name;
-        
-        // Animations to switch screens
-        gsap.to('#auth-gate', {
+    // 2. Transition Logic: Landing to Builder
+    window.enterBuilder = () => {
+        gsap.to('#landing-page', {
             y: -100,
             opacity: 0,
             duration: 1,
             ease: "power3.inOut",
             onComplete: () => {
-                document.getElementById('auth-gate').style.display = 'none';
-                const app = document.getElementById('app-interface');
-                app.style.display = 'block';
-                app.style.opacity = '0';
-                gsap.to(app, {
+                document.getElementById('landing-page').style.display = 'none';
+                const builder = document.getElementById('builder-interface');
+                builder.style.display = 'block';
+                builder.style.opacity = '0';
+                gsap.to(builder, {
                     opacity: 1,
                     duration: 1,
-                    ease: "power2.out"
+                    onComplete: () => {
+                        addChatMessage('ai', 'VANDER ARCHITECT: Systems synchronized. What are we building today?');
+                    }
                 });
-                initEditor();
             }
         });
-    }
-
-    // 3. Editor View Logic
-    window.switchView = (view) => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
-        
-        if (view === 'editor') {
-            document.querySelector('.tab:nth-child(1)').classList.add('active');
-            document.getElementById('view-editor').classList.add('active');
-        } else {
-            document.querySelector('.tab:nth-child(2)').classList.add('active');
-            document.getElementById('view-preview').classList.add('active');
-            simulatePreviewLoad();
-        }
     };
 
-    function initEditor() {
-        const lineNumbers = document.querySelector('.line-numbers');
-        lineNumbers.innerHTML = '';
-        for (let i = 1; i <= 30; i++) {
-            const num = document.createElement('div');
-            num.innerText = i;
-            lineNumbers.appendChild(num);
-        }
-    }
+    window.exitBuilder = () => { window.location.reload(); };
 
-    function simulatePreviewLoad() {
-        const placeholder = document.querySelector('.preview-placeholder');
-        placeholder.style.display = 'block';
-        setTimeout(() => {
-            gsap.to(placeholder, {
-                opacity: 0,
-                duration: 0.5,
-                onComplete: () => {
-                    placeholder.style.display = 'none';
-                    const frame = document.querySelector('.preview-frame');
-                    frame.innerHTML = '<h2 style="color:#1f2937; font-family:Inter; font-weight:800; letter-spacing:-1px;">BUILD STATUS: ONLINE</h2>';
-                }
-            });
-        }, 1500);
-    }
-
-    // 4. Chat Logic
-    window.sendMessage = () => {
-        const input = document.getElementById('chat-input');
+    // 3. Chat Logic
+    window.sendChatMessage = () => {
+        const input = document.getElementById('user-prompt');
         const text = input.value.trim();
         if (!text) return;
 
-        addMessage('user', text);
+        addChatMessage('user', text);
         input.value = '';
 
-        // Simulate AI Response (Specialized for Web Building)
+        // Simulate AI Construction (Base44 style)
         setTimeout(() => {
-            const model = document.getElementById('ai-model-selector').value;
+            const model = document.getElementById('model-select').value;
             let response = "";
-            let code = "";
+            let codeSnippet = "";
 
             if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
-                response = `Building a modern ${model} architecture for your landing page. I'll focus on responsive layouts and premium light-mode aesthetics.`;
-                code = `// Web Architect [${model}]\n// Generating Responsive Landing Page Structure\n\nconst Layout = {\n    header: "StickHeader [Subtle Glass]",\n    hero: "Dynamic Hero [Centered]",\n    features: "Adaptive Grid [3 Col]",\n    footer: "Minimal Clean"\n};\n\nfunction render() {\n    return "UI Components: Ready";\n}`;
+                response = `[${model}]: Building structural components for your technical landing page. I'll focus on high-end glassmorphism and performance optimizations.`;
+                codeSnippet = `// Architect Code Output [${model}]\n// Initializing Landing Page Header Component\n\nfunction renderHeader() {\n    const nav = document.createElement('nav');\n    nav.className = 'glass sticky top-0';\n    return nav;\n}\n\n// Deploying core hero logic...`;
             } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
-                response = `Architecting a functional ${model} dashboard app. Initializing state management and data grids.`;
-                code = `// App Builder [${model}]\n// Initializing React-style state for dashboard components\n\nconst APP_STATE = {\n    user: "Authenticated",\n    view: "Overview",\n    stats: [98.2, 1045, 12],\n    theme: "Light-Elegance"\n};\n\nfunction createDashboard() {\n    console.log("Building grid visualizer...");\n    return "State: Synchronized";\n}`;
+                response = `[${model}]: Architecting an AI-powered dashboard. Initializing data-grid kernels and state persistence.`;
+                codeSnippet = `// Architect Code Output [${model}]\n// Generating Application State Management Layer\n\nconst AppState = {\n    activeUser: "VanderMaster",\n    sessionToken: "VDR_0xCADE3",\n    status: "OPTIMIZED"\n};\n\nfunction syncState() {\n    console.log("State: Synchronized.");\n}`;
             } else {
-                response = `[Vander Architect]: Analyzing Request for ${model}. I'll build out the core logic based on your technical prompt.`;
-                code = `// AI Core [${model}]\n// Generating specialized logic based on user technical prompt: ${text}\n\nfunction initCore() {\n    const logic = "Optimized";\n    return \`Status: \${logic}\`;\n}`;
+                response = `[${model}]: Prompt analyzed. Initializing specialized code generation for the provided technical context. Check the terminal for output.`;
+                codeSnippet = `// Code Output [${model}]\n// Generating optimized logic based on user input: ${text}\n\nfunction initializeTerminal() {\n    const status = "BASE44-ONLINE";\n    return status;\n}`;
             }
 
-            addMessage('system', response);
-            updateCode(code);
+            addChatMessage('ai', response);
+            updateCodeOutput(codeSnippet);
         }, 1200);
     };
 
-    window.updateModel = () => {
-        const model = document.getElementById('ai-model-selector').value;
-        addMessage('system', `AI Architect switched to ${model}. READY TO BUILD.`);
-    };
-
-    // Note: Do NOT hardcode actual private keys here since this is pushed to GitHub.
-    // The UI handles key entry via the API MANAGEMENT modal, saving them safely to memory.
-
-    function addMessage(type, text) {
-        const container = document.getElementById('chat-messages');
+    function addChatMessage(type, text) {
+        const history = document.getElementById('chat-history');
         const msg = document.createElement('div');
-        msg.className = `message ${type}`;
-        msg.innerHTML = `<p>${text}</p>`;
-        container.appendChild(msg);
-        container.scrollTop = container.scrollHeight;
-        
+        msg.className = `msg ${type}`;
+        msg.innerText = text;
+        history.appendChild(msg);
+        history.scrollTop = history.scrollHeight;
+
         gsap.from(msg, {
-            y: 20,
+            y: 10,
             opacity: 0,
             duration: 0.5,
-            ease: "back.out(1.7)"
+            ease: "power2.out"
         });
     }
 
-    function updateCode(newCode) {
-        const display = document.getElementById('code-display').querySelector('code');
-        display.innerText = newCode;
+    function updateCodeOutput(code) {
+        const codeOut = document.getElementById('code-output');
+        codeOut.innerText = code;
+        gsap.from(codeOut, {
+            opacity: 0,
+            duration: 0.5
+        });
     }
 
-    // 5. API Modal Logic
-    const apiModal = document.getElementById('api-modal');
-    window.openApiKeyModal = () => { apiModal.style.display = 'flex'; };
-    window.closeApiKeyModal = () => { apiModal.style.display = 'none'; };
-    window.saveKeys = () => {
-        const btn = document.querySelector('#api-modal .btn-glow');
-        btn.innerText = "CONFIG SAVED";
-        setTimeout(() => {
-            btn.innerText = "SAVE CONFIG";
-            closeApiKeyModal();
-        }, 1000);
+    // 4. Builder Tab Logic
+    window.switchBuilderView = (view) => {
+        const tabs = document.querySelectorAll('.tab-item');
+        tabs.forEach(t => t.classList.remove('active'));
+        
+        if (view === 'code') {
+            tabs[0].classList.add('active');
+            document.getElementById('editor-view').style.display = 'block';
+            document.getElementById('preview-view').style.display = 'none';
+        } else {
+            tabs[1].classList.add('active');
+            document.getElementById('editor-view').style.display = 'none';
+            document.getElementById('preview-view').style.display = 'flex';
+            setTimeout(() => {
+                const preview = document.getElementById('preview-view');
+                preview.innerHTML = '<h2 style="color:#00f2ff; font-family:Orbitron;">BUILD STATUS: SUCCESS</h2>';
+            }, 1500);
+        }
     };
 
-    // 6. Logout
-    window.logout = () => { window.location.reload(); };
-
-    // 7. Background Particles
+    // 5. Background Particles
     const particleContainer = document.getElementById('particles-js');
     if (particleContainer) {
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 70; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
             const size = Math.random() * 2 + 1;
@@ -181,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
             p.style.top = `${Math.random() * 100}%`;
             particleContainer.appendChild(p);
             gsap.to(p, {
-                x: `+=${Math.random() * 100 - 50}`,
-                y: `+=${Math.random() * 100 - 50}`,
+                x: `+=${Math.random() * 120 - 60}`,
+                y: `+=${Math.random() * 120 - 60}`,
                 duration: 10 + Math.random() * 10,
                 repeat: -1,
                 yoyo: true,
