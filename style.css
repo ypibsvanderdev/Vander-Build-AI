@@ -184,6 +184,63 @@ h1, .logo, .hero-title { font-weight: 800; letter-spacing: -1px; }
 .db-header p { color: var(--text-dim); font-size: 1.15rem; }
 
 /* DASHBOARD CARDS (CLEAN LIGHT) */
+/* API CONFIG GRID (Clinical) */
+.api-config-grid { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 1.5rem; 
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.key-input-row { 
+    margin-top: 1.5rem; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.8rem; 
+}
+
+.key-input-row label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+}
+
+.key-display input {
+    background: #fff;
+    border: 1.5px solid #f3f4f6;
+    padding: 1rem;
+    border-radius: 12px;
+    flex: 1;
+    font-family: 'JetBrains Mono';
+    font-size: 0.85rem;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.key-display input:focus {
+    border-color: #000;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.btn-save {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 750;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: transform 0.2s;
+}
+
+.btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
 .key-card {
     background: #f9fafb; border: 1px solid var(--border-light); padding: 2.5rem; border-radius: 20px; margin-bottom: 4rem;
 }

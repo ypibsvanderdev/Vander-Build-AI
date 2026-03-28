@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VANDER BUILDER | AI Evolution</title>
-    <meta name="description" content="AI Code Builder & Chatbot. 100% animated and premium in Light Mode.">
+    <meta name="description" content="AI Code Builder & Chatbot. Clinical Light Mode focused on model configuration.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
             <div class="nav-container">
                 <div class="logo">VANDER<span>BUILDER</span></div>
                 <div class="nav-right" style="display:flex; gap:1.5rem; align-items:center;">
-                    <button class="btn-outline" onclick="scrollToBottom()">Pricing</button>
+                    <button class="btn-outline" onclick="scrollToBottom()">Features</button>
                     <button class="btn-glow" onclick="enterBuilder()">AI BUILDER</button>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         </section>
     </section>
 
-    <!-- 2. LOVABLE-STYLE BUILDER INTERFACE (ALL LIGHT) -->
+    <!-- 2. LOVABLE-STYLE BUILDER INTERFACE (Focus on API Config) -->
     <main id="builder-interface" style="display: none;">
         <header class="lovable-header">
             <div class="header-left">
@@ -49,19 +49,17 @@
             <div class="header-center">
                 <div class="tab-group">
                     <button class="tab-btn active" onclick="switchMainView('preview')">Preview</button>
-                    <button class="tab-btn" onclick="switchMainView('dashboard')">Dashboard</button>
+                    <button class="tab-btn" onclick="switchMainView('models')">API Config</button>
                     <button class="tab-btn" onclick="switchMainView('code')">Code</button>
                 </div>
             </div>
             <div class="header-right">
-                <button class="btn-upgrade">Upgrade</button>
-                <button class="btn-publish">Publish</button>
+                <button class="btn-upgrade">VanderPro</button>
                 <div class="user-avatar" onclick="exitBuilder()"></div>
             </div>
         </header>
 
         <div class="app-viewport">
-            <!-- SIDEBAR (Clinical Light) -->
             <aside class="lovable-sidebar">
                 <div class="sidebar-top">
                     <div class="sidebar-header">
@@ -69,15 +67,15 @@
                     </div>
                     <div id="lovable-messages">
                         <div class="chat-bubble ai">
-                            <p><strong>Vander Architect</strong> initialized in light-mode environment. Ready to build what you can imagine. What's the objective?</p>
+                            <p><strong>Vander Architect</strong> initialized. I'm ready to build locally. What's the plan today?</p>
                         </div>
                     </div>
                 </div>
                 <div class="sidebar-bottom">
                     <div class="suggestions-row">
                         <span class="tag">Create App</span>
-                        <span class="tag">Add Stripe</span>
-                        <span class="tag">Auth Grid</span>
+                        <span class="tag">Show Models</span>
+                        <span class="tag">Config API</span>
                     </div>
                     <div class="chat-input-wrapper">
                         <textarea id="ai-input" placeholder="What would you like to build?"></textarea>
@@ -86,46 +84,50 @@
                 </div>
             </aside>
 
-            <!-- MAIN VIEW (ALL LIGHT) -->
             <section class="main-content-view">
-                <!-- VIEW: DASHBOARD (Pricing/Access Cards) -->
-                <div id="view-dashboard" class="content-panel">
+                <!-- VIEW: MODELS (API KEY CONFIGURATION) -->
+                <div id="view-models" class="content-panel">
                     <div class="dashboard-scroll">
                         <header class="db-header">
-                            <h2>VanderHub Key Store</h2>
-                            <p>Clinical terminal for license and key management.</p>
+                            <h2>API Management</h2>
+                            <p>Input keys to unlock specialized AI architectures from free providers.</p>
                         </header>
                         
-                        <div class="key-card">
-                            <div class="card-status"><span class="badge active">Active Key</span> <span class="badge tier">LIFETIME</span></div>
-                            <div class="key-display">
-                                <code>VH-SYP8FG-9WYBU5-OVKYLB-NGTC2D</code>
-                                <button class="btn-copy">Copy</button>
+                        <div class="api-config-grid">
+                            <div class="key-card">
+                                <div class="card-status"><span class="badge active">AI Model</span> <span class="badge tier">Gemini 1.5 Flash</span></div>
+                                <div class="key-input-row">
+                                    <label>Google Gemini Key</label>
+                                    <div class="key-display">
+                                        <input type="password" id="gemini-key" placeholder="AI-...">
+                                        <button class="btn-save" onclick="saveKey('Gemini')">Save</button>
+                                    </div>
+                                </div>
+                                <p class="card-note">Free Tier: Up to 15 requests per minute with no cost.</p>
                             </div>
-                            <p class="card-note">Lifetime access — never expires.</p>
-                        </div>
 
-                        <div class="price-grid">
-                            <div class="price-card">
-                                <div class="card-top"><h4>Monthly</h4></div>
-                                <div class="price-val">$5<span>/ month</span></div>
-                                <ul class="features">
-                                    <li>Full VanderHub access</li>
-                                    <li>New key each month</li>
-                                    <li>Cancel anytime</li>
-                                </ul>
-                                <button class="btn-select">Select Plan</button>
+                            <div class="key-card">
+                                <div class="card-status"><span class="badge active">AI Model</span> <span class="badge tier">Groq / Llama 3</span></div>
+                                <div class="key-input-row">
+                                    <label>Groq Cloud Key</label>
+                                    <div class="key-display">
+                                        <input type="password" id="groq-key" placeholder="gsk-...">
+                                        <button class="btn-save" onclick="saveKey('Groq')">Save</button>
+                                    </div>
+                                </div>
+                                <p class="card-note">Extreme speed. Free for developers under usage caps.</p>
                             </div>
-                            <div class="price-card popular">
-                                <div class="popular-badge">POPULAR</div>
-                                <div class="card-top"><h4>Lifetime</h4></div>
-                                <div class="price-val">$50<span>one-time</span></div>
-                                <ul class="features">
-                                    <li>Full VanderHub access</li>
-                                    <li>Never expires</li>
-                                    <li>One-time payment</li>
-                                </ul>
-                                <button class="btn-select prim">Select Lifetime</button>
+
+                            <div class="key-card">
+                                <div class="card-status"><span class="badge active">AI Model</span> <span class="badge tier">Mistral 7B</span></div>
+                                <div class="key-input-row">
+                                    <label>Mistral Key</label>
+                                    <div class="key-display">
+                                        <input type="password" id="mistral-key" placeholder="Paste your key here...">
+                                        <button class="btn-save" onclick="saveKey('Mistral')">Save</button>
+                                    </div>
+                                </div>
+                                <p class="card-note">Premium-tier local performance. Highly stable free tier.</p>
                             </div>
                         </div>
                     </div>
@@ -138,11 +140,11 @@
                             <div class="stage-controls">
                                 <span class="control"></span><span class="control"></span><span class="control"></span>
                             </div>
-                            <div class="stage-url">localhost:3000</div>
+                            <div class="stage-url">localhost:3000 / explorer</div>
                         </div>
                         <div class="stage-content">
                             <div class="spinner"></div>
-                            <p style="color:#6b7280; font-size:0.9rem; margin-top:1.5rem; font-weight:600;">Architecting Interface...</p>
+                            <p style="color:#6b7280; font-size:0.95rem; margin-top:1.5rem; font-weight:600;">Computing Project Nucleus...</p>
                         </div>
                     </div>
                 </div>
@@ -151,18 +153,16 @@
                 <div id="view-code" class="content-panel">
                     <div class="preview-stage">
                         <div class="stage-header" style="justify-content:space-between;">
-                            <span style="font-size:0.8rem; font-weight:700;">App.tsx</span>
-                            <span style="font-size:0.7rem; color:var(--text-dim);">TypeScript</span>
+                            <span style="font-size:0.85rem; font-weight:700;">index.html</span>
+                            <span style="font-size:0.75rem; color:var(--text-dim);">HTML</span>
                         </div>
-                        <pre id="lovable-editor"><code>// Clinical Architect Output
-export const AIBuilder = () => {
-    return (
-        <div className="flex clinical-light">
-            <Sidebar status="synchronized" />
-            <Main architect="online" />
-        </div>
-    );
-};</code></pre>
+                        <pre id="lovable-editor"><code>// Clinical Architect Output Engine
+// Ready for specialized generation once API keys are saved.
+// Generating structural layout...
+
+&lt;div class="vander-app"&gt;
+    &lt;h1&gt;SYSTEM ONLINE&lt;/h1&gt;
+&lt;/div&gt;</code></pre>
                     </div>
                 </div>
             </section>

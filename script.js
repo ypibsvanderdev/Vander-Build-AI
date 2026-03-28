@@ -58,12 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.exitBuilder = () => { window.location.reload(); };
 
-    // 3. Tab Management (Preview / Dashboard / Code)
+    // 3. Tab Management (Preview / Models / Code)
     window.switchMainView = (viewId) => {
         const btns = document.querySelectorAll('.tab-btn');
         btns.forEach(btn => {
             btn.classList.remove('active');
-            if (btn.innerText.toLowerCase() === viewId.toLowerCase()) {
+            if (btn.innerText.toLowerCase().includes(viewId.toLowerCase()) || btn.getAttribute('onclick')?.includes(viewId)) {
                 btn.classList.add('active');
             }
         });
@@ -73,11 +73,20 @@ document.addEventListener('DOMContentLoaded', () => {
             panel.classList.remove('active');
             if (panel.id === `view-${viewId}`) {
                 panel.classList.add('active');
-                gsap.from(panel, { opacity: 0, y: 10, duration: 0.5 });
+                gsap.from(panel, { opacity: 0, y: 15, duration: 0.3, ease: "power2.out" });
             }
         });
 
         if (viewId === 'preview') simulatePreview();
+    };
+
+    window.saveKey = (provider) => {
+        const id = `${provider.toLowerCase()}-key`;
+        const val = document.getElementById(id).value;
+        if (val) {
+            addMessage('ai', `<strong>Vander Architect</strong>: [${provider}] key synchronized successfully. System optimization active.`);
+            document.getElementById(id).style.borderColor = "#10b981";
+        }
     };
 
     function simulatePreview() {
