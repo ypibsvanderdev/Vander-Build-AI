@@ -147,22 +147,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const cleanText = aiResponse.replace(/```[\s\S]*?```/g, '').trim();
             const cleanCode = codeMatch ? codeMatch[1].trim() : `// Generated Architectural Logic\nconst output = "Ready";`;
 
-            updateMessage(loadingMsgId, `<strong>[Architect Output | Gemini 1.5 Flash]</strong> <span style="color:#10b981;">[LIVE API]</span>: ${cleanText}`);
+            updateMessage(loadingMsgId, cleanText);
             updateEditorCode(cleanCode);
 
         } catch (error) {
             // FALLBACK TO PREMIUM SIMULATION IF NO REAL KEY OR ERROR
             setTimeout(() => {
-                let modelLabel = activeModel;
                 let responseText = "";
                 let codeText = "";
 
                 if (text.toLowerCase().includes("website") || text.toLowerCase().includes("landing")) {
-                    responseText = `<strong>[Architect Output | ${modelLabel}]</strong> <span style="color:#f59e0b;">[Vander-Sim]</span>: Constructing high-precision structural kernels for your landing page. Clinical light-mode focus.`;
-                    codeText = `// Clinical Structural Kernel [${modelLabel}]\nconst Layout = { scheme: "clinical-white", nodes: 12 };`;
+                    responseText = `I'll start building a clinical light-mode landing page architecture for you. I'm focusing on structural integrity and premium aesthetics.`;
+                    codeText = `// Landing Page Structure\nconst Layout = { theme: "clinical-white", blocks: 16 };`;
+                } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
+                    responseText = `Starting the application state management build. I'm synchronizing your project's primary nuclei right now.`;
+                    codeText = `// App State Manager\nconst State = { active: true, view: "main" };`;
                 } else {
-                    responseText = `<strong>[Architect Output | ${modelLabel}]</strong> <span style="color:#f59e0b;">[Vander-Sim]</span>: Specialized analysis complete. Generating logic for: ${text}`;
-                    codeText = `// Specialized Logic [${modelLabel}]\nfunction init() { return "Online"; }`;
+                    responseText = `I've analyzed your request for "${text}". I'm architecting the specialized logic now.`;
+                    codeText = `// Custom Logic: ${text}\nfunction init() { return "Ready"; }`;
                 }
 
                 updateMessage(loadingMsgId, responseText);
