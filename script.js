@@ -162,8 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (text.toLowerCase().includes("app") || text.toLowerCase().includes("dashboard")) {
                     responseText = `Starting the application state management build. I'm synchronizing your project's primary nuclei right now.`;
                     codeText = `// App State Manager\nconst State = { active: true, view: "main" };`;
+                } else if (text.toLowerCase().startsWith("hello") || text.toLowerCase().startsWith("hi")) {
+                    responseText = `Hello! How can I help you build today?`;
+                    codeText = `// Architecture Ready\nfunction main() { return "Online"; }`;
                 } else {
-                    responseText = `I've analyzed your request for "${text}". I'm architecting the specialized logic now.`;
+                    responseText = `I've analyzed your request. I'm architecting the specialized logic now.`;
                     codeText = `// Custom Logic: ${text}\nfunction init() { return "Ready"; }`;
                 }
 
